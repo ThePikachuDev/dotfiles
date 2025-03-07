@@ -25,9 +25,34 @@ set inputbar-fg                 "#ebdbb2"
 set statusbar-bg                "#282828"
 set statusbar-fg                "#ebdbb2"
 
-set highlight-color             "#458588"
-set highlight-active-color      "#458588"
+set highlight-color "#e78a4eAA"  # Softer warm orange
+# set highlight-active-color      "#ffffff"  # Gruvbox yellow
 
+set default-bg                  "#1d2021"
+set default-fg                  "#001512"
+set recolor-lightcolor          "#282828"
+set recolor-darkcolor           "#ebdbb2"
+
+# Gruvbox Theme
+
+set statusbar-h-padding 0
+set statusbar-v-padding 0
+set page-padding 1
+map u scroll half-up
+map d scroll half-down
+map D toggle_page_mode
+map r reload
+map R rotate
+map K zoom in
+map J zoom out
+map i recolor
+set recolor                     true
+map p print
+
+# To remember my history  
+
+set save-position true
+set database-path ~/.local/share/zathura
 set default-bg                  "#1d2021"
 set default-fg                  "#001512"
 set recolor-lightcolor          "#282828"
@@ -51,4 +76,7 @@ map p print
 
 set save-position true
 set database-path ~/.local/share/zathura
+
+# Disable the Auto copy text on Selection 
+set selection-clipboard none
 
