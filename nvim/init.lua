@@ -1,4 +1,4 @@
-require("pikachu")
-require("luasnip.loaders.from_vscode").lazy_load()
-
-
+require("config.lazy")
+require("config.remap")
+require("config.set")
+require("config.plugins")
