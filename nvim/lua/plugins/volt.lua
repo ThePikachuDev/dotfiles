@@ -5,7 +5,5 @@ return {
         opts = {},
         cmd = { "Typr", "TyprStats" },
     },
-    { "nvzone/timerly", cmd = "TimerlyToggle" }
-
-
+    { "nvzone/timerly", cmd = "TimerlyToggle" },
 }

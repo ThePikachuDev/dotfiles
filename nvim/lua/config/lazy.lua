@@ -49,7 +49,15 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "0"
+
+-- Remove colorcolumn on every buffer
+vim.api.nvim_create_autocmd("BufEnter", {
+    pattern = "*",
+    callback = function()
+        vim.opt.colorcolumn = ""
+    end
+})
 
 
 -- Setup lazy.nvim
@@ -64,3 +72,4 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
+
