@@ -1,8 +1,11 @@
 # My Cool dotfiles
 
 ![Preview 1](./Previews/hyprwm1.png)
+<br>
 ![Preview 2](./Previews/hyprwm2.png)
+<br>
 ![Preview 1](./Previews/hyprwm3.png)
+<br>
 
 
 **I use These tools in my current Arch linux setup :**
