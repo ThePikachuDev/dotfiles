@@ -1,5 +1,10 @@
 # My Cool dotfiles
 
+![Preview 1](./Previews/hyprwm1.png)
+![Preview 2](./Previews/hyprwm2.png)
+![Preview 1](./Previews/hyprwm3.png)
+
+
 **I use These tools in my current Arch linux setup :**
 
 - Neovim 
@@ -13,5 +18,6 @@
 ![My Neovim Alpha page preview](./Previews/alpha_page_nvim.png)
 ![My Neovim coding page preview](./Previews/nvim_code_buffer.png)
 
-# You can see which plugins i use in nvim/lua/plugins folder.
+## You can see which plugins i use in nvim/lua/plugins folder.
+
 
