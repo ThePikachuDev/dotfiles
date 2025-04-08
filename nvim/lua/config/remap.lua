@@ -55,9 +55,3 @@ vim.keymap.set("n", "<leader>lx", function()
     local current_state = vim.diagnostic.config().virtual_text
     vim.diagnostic.config({ virtual_text = not current_state })
 end, { desc = "Toggle LSP diagnostics virtual text" })
-
-
-
-
-
-

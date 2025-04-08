@@ -24,24 +24,7 @@ return {
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             lsp.preset('recommended')
             lsp.ensure_installed({
-                'css_variables',
-                'eslint',
-                'cssls',
-                'cssmodules_ls',
-                'docker_compose_language_service',
-                'dockerls',
-                'glsl_analyzer',
-                'glslls',
-                'golangci_lint_ls',
-                'gopls',
-                'clangd',
-                'html',
-                'htmx',
-                'lua_ls',
-                'ts_ls',
-                'astro',
-                'pylsp',
-            })
+           })
             lspConfig.astro.setup{
                 capabilities = capabilities,
             }

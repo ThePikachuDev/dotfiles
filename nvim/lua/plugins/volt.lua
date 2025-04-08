@@ -6,4 +6,8 @@ return {
         cmd = { "Typr", "TyprStats" },
     },
     { "nvzone/timerly", cmd = "TimerlyToggle" },
+    {
+        "nvzone/minty",
+        cmd = { "Shades", "Huefy" },
+    },
 }
