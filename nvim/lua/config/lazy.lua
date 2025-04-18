@@ -13,6 +13,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
+
 vim.opt.rtp:prepend(lazypath)
 
 -- Make sure to setup `mapleader` and `maplocalleader` before
@@ -63,6 +64,22 @@ vim.api.nvim_create_autocmd("BufEnter", {
     end
 })
 
+
+vim.filetype.add({
+extension = { rasi = "rasi", rofi = "rasi", wofi = "rasi" },
+filename = {
+["vifmrc"] = "vim",
+},
+pattern = {
+[".*/waybar/config"] = "jsonc",
+[".*/mako/config"] = "dosini",
+[".*/kitty/.+%.conf"] = "kitty",
+[".*/hypr/.+%.conf"] = "hyprlang",
+["%.env%.[%w_.-]+"] = "sh",
+},
+})
+vim.treesitter.language.register("bash", "kitty") 
+
 -- format on save
 vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = "*",
@@ -70,6 +87,11 @@ vim.api.nvim_create_autocmd("BufWritePre", {
         require("conform").format({ bufnr = args.buf })
     end,
 })
+
+
+
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
 -- Setup lazy.nvim
 require("lazy").setup({
@@ -83,3 +105,5 @@ require("lazy").setup({
     -- automatically check for plugin updates
     checker = { enabled = true },
 })
+
+
