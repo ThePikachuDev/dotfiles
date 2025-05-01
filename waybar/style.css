@@ -1,11 +1,10 @@
 /* Material You inspired colors */
-@define-color bg_color rgba(29, 32, 33, 0.85);
-@define-color accent #569958;
-@define-color accent_secondary #8bd5ca;
-@define-color text_color #cad3f5;
-@define-color material_dark #363a4f;
-@define-color warning #f5a97f;
-@define-color critical #ed8796;
+/* Import pywal colors */
+@import url("file:///home/pikachu/.cache/wal/colors-waybar.css");
+
+/* Define additional variables based on pywal colors */
+@define-color material_dark alpha(@background, 0.7);
+@define-color accent_secondary alpha(@color6, 0.9);
 
 * {
     font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
@@ -14,11 +13,9 @@
 }
 
 window#waybar {
-    background: @bg_color;
-    color: @text_color;
+    background: alpha(@background, 0.85);
+    color: @foreground;
     border-radius: 8px;
-    transition-property: background-color;
-    transition-duration: 0.5s;
 }
 
 window#waybar.hidden {
@@ -36,17 +33,16 @@ window#waybar.hidden {
 
 #workspaces button {
     padding: 0 4px;
-    color: @text_color;
+    color: @foreground;
     background-color: transparent;
     border-radius: 4px;
     margin: 2px 4px;
     min-width: 20px;
-    transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.active {
-    background-color: @accent;
-    color: @material_dark;
+    background-color: @color1;
+    color: @background;
     min-width: 24px;
     box-shadow: rgba(0, 0, 0, 0.288) 1px 1px 3px;
     padding-left: 8px;
@@ -55,13 +51,13 @@ window#waybar.hidden {
 
 #workspaces button:hover {
     background: @accent_secondary;
-    color: @material_dark;
+    color: @background;
     box-shadow: rgba(0, 0, 0, 0.288) 1px 1px 3px;
 }
 
 #workspaces button.urgent {
-    background-color: @critical;
-    color: @material_dark;
+    background-color: @color1;
+    color: @background;
 }
 
 #clock,
@@ -76,14 +72,14 @@ window#waybar.hidden {
 #window {
     padding: 0 6px;
     margin: 3px 2px;
-    color: @text_color;
+    color: @foreground;
     border-radius: 6px;
     background-color: @material_dark;
 }
 
 #clock {
-    background-color: @accent;
-    color: @material_dark;
+    background-color: @color1;
+    color: @background;
     font-weight: bold;
     padding-left: 8px;
     padding-right: 8px;
@@ -93,20 +89,19 @@ window#waybar.hidden {
 }
 
 #battery {
-    background-color: @material_dark;
     padding-right: 8px;
     padding-left: 6px;
 }
 
 #battery.charging,
 #battery.plugged {
-    background-color: @accent;
-    color: @material_dark;
+    background-color: @color1;
+    color: @background;
 }
 
 #battery.critical:not(.charging) {
-    background-color: @critical;
-    color: @material_dark;
+    background-color: @color1;
+    color: @background;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: linear;
@@ -117,58 +112,38 @@ window#waybar.hidden {
 @keyframes blink {
     to {
         background-color: @material_dark;
-        color: @critical;
+        color: @color1;
     }
 }
 
-#cpu {
-    background-color: @material_dark;
-    padding-right: 8px;
-    padding-left: 6px;
-}
-
-#memory {
-    background-color: @material_dark;
-    padding-right: 8px;
-    padding-left: 6px;
-}
-
-#temperature {
-    background-color: @material_dark;
+#cpu,
+#memory,
+#temperature,
+#network,
+#pulseaudio,
+#tray {
     padding-right: 8px;
     padding-left: 6px;
 }
 
 #temperature.critical {
-    background-color: @critical;
-    color: @material_dark;
-}
-
-#network {
-    background-color: @material_dark;
-    padding-right: 8px;
-    padding-left: 6px;
+    background-color: @color1;
+    color: @background;
 }
 
 #network.disconnected {
-    background-color: @critical;
-    color: @material_dark;
-}
-
-#pulseaudio {
-    background-color: @material_dark;
-    padding-right: 8px;
-    padding-left: 6px;
+    background-color: @color1;
+    color: @background;
 }
 
 #pulseaudio.muted {
-    background-color: @warning;
-    color: @material_dark;
+    background-color: @color3;
+    color: @background;
 }
 
 #custom-power {
-    background-color: @critical;
-    color: @material_dark;
+    background-color: @color1;
+    color: @background;
     margin-right: 4px;
     padding-right: 8px;
     padding-left: 6px;
@@ -181,27 +156,21 @@ window#waybar.hidden {
     padding-right: 8px;
 }
 
-#tray {
-    background-color: @material_dark;
-    padding-right: 8px;
-    padding-left: 6px;
-}
-
 #tray>.passive {
     -gtk-icon-effect: dim;
 }
 
 #tray>.needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: @warning;
+    background-color: @color3;
 }
 
 tooltip {
-    background-color: @bg_color;
+    background-color: @background;
     border-radius: 6px;
-    border: 1px solid @accent;
+    border: 1px solid @color1;
 }
 
 tooltip label {
-    color: @text_color;
+    color: @foreground;
 }
