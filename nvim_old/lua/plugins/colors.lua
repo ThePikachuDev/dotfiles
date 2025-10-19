@@ -11,12 +11,4 @@ return {
 	},
 	{ "rebelot/kanagawa.nvim" },
 	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
-	{
-		"tahayvr/matteblack.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			-- vim.cmd.colorscheme "matteblack"
-		end,
-	},
 }

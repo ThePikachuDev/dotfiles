@@ -1,19 +1,21 @@
 # My Cool dotfiles
 
-![Preview 1](./Previews/hyprwm1.png)
-<br>
-![Preview 2](./Previews/hyprwm2.png)
-<br>
-![Preview 1](./Previews/hyprwm3.png)
-<br>
 
+## My current i3wm setup
 
-**I use These tools in my current Arch linux setup :**
+![i3WM Preview](./Previews/i3wm showcase.png)
+
+**I use These tools in my current linux setup :**
 
 - Neovim 
-- Fish shell
-- Hyprland ( with hyprdots )
-- kew , tuisic , spotify with spicetify ( for listening to music )
+- Zsh shell
+- i3wm
+    - polybar
+    - rofi ( i took a rice from internet )
+    - dunst
+    - i3lock
+- kew
+- zen browser
 - I have cool wallpapers 
   
 **My Neovim setup :** 

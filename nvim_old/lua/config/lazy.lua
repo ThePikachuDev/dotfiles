@@ -1,12 +1,13 @@
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
 	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
 	if vim.v.shell_error ~= 0 then
 		vim.api.nvim_echo({
-			{ "failed to clone lazy.nvim:\n", "errormsg" },
-			{ out, "warningmsg" },
-			{ "\npress any key to exit..." },
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
 		}, true, {})
 		vim.fn.getchar()
 		os.exit(1)
@@ -14,6 +15,10 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
+
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
@@ -24,7 +29,6 @@ vim.opt.foldlevel = 99
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
--- this will set tabs to 4 spaces instead of 8 spaces
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -52,6 +56,7 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "0"
 
+-- Remove colorcolumn on every buffer
 vim.api.nvim_create_autocmd("BufEnter", {
 	pattern = "*",
 	callback = function()
@@ -82,19 +87,26 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
--- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
--- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 
+-- Setup lazy.nvim
 require("lazy").setup({
 	spec = {
 		-- import your plugins
 		{ import = "plugins" },
 	},
+	-- checker = { enabled = false },
+	-- Configure any other settings here. See the documentation for more details.
+	-- colorscheme that will be used when installing plugins.
 	install = { colorscheme = { "habamax" } },
-	-- checker = { enabled = true, notify = false },
+	-- automatically check for plugin updates
+	checker = { enabled = true, notify = false },
 })
 
 require("lspconfig").lua_ls.setup({})
+-- require("lspconfig").ts_ls.setup({})
+-- TypeScript
 require("lspconfig").ts_ls.setup({
 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
 	cmd = { "typescript-language-server", "--stdio" },
@@ -102,10 +114,14 @@ require("lspconfig").ts_ls.setup({
 
 require("nvim-ts-autotag").setup({
 	opts = {
-		enable_close = true,
-		enable_rename = true,
-		enable_close_on_slash = false,
+		-- Defaults
+		enable_close = true, -- Auto close tags
+		enable_rename = true, -- Auto rename pairs of tags
+		enable_close_on_slash = false, -- Auto close on trailing </
 	},
+	-- Also override individual filetype configs, these take priority.
+	-- Empty by default, useful if one of the "opts" global settings
+	-- doesn't work well in a specific filetype
 	per_filetype = {
 		["html"] = {
 			enable_close = false,
@@ -113,27 +129,4 @@ require("nvim-ts-autotag").setup({
 	},
 })
 
--- require("lspconfig").zls.setup({})
--- require("lspconfig").qmlls.setup {
---     cmd = { "qmlls", "-E" }
--- }
-
---
--- -- 🔰 Keyword Highlights: TODO / NOTME / DOING / DONE
---
--- -- Define highlight groups with nice, modern colors
--- vim.api.nvim_set_hl(0, "TodoHighlight", { fg = "#ffcc00", bold = true }) -- Yellow
--- vim.api.nvim_set_hl(0, "NotMeHighlight", { fg = "#c678dd", bold = true }) -- Purple
--- vim.api.nvim_set_hl(0, "DoingHighlight", { fg = "#61afef", bold = true }) -- Blue
--- vim.api.nvim_set_hl(0, "DoneHighlight", { fg = "#98c379", bold = true }) -- Green
---
--- -- Apply them whenever a buffer is opened
--- vim.cmd([[
---   augroup highlight_keywords
---     autocmd!
---     autocmd BufEnter,BufWinEnter * call matchadd('TodoHighlight', '\<TODO\>')
---     autocmd BufEnter,BufWinEnter * call matchadd('NotMeHighlight', '\<NOTME\>')
---     autocmd BufEnter,BufWinEnter * call matchadd('DoingHighlight', '\<DOING\>')
---     autocmd BufEnter,BufWinEnter * call matchadd('DoneHighlight', '\<DONE\>')
---   augroup END
--- ]])
+require("lspconfig").zls.setup({})
