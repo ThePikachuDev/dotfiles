@@ -1,14 +1,13 @@
 return {
 	{
-		"williamboman/mason-lspconfig.nvim",
-		version = "1.*",
+		"mason-org/mason.nvim",
+		opts = {},
 	},
 	{
 		"nvimdev/lspsaga.nvim",
-		code_action = "",
-		code_action_prompt = { enable = false },
 		config = function()
 			require("lspsaga").setup({
+				code_action = "",
 				code_action_prompt = { enable = false },
 				lightbulb = { enable = false },
 			})
@@ -19,106 +18,84 @@ return {
 		},
 	},
 	{
-		"VonHeikemen/lsp-zero.nvim",
-		branch = "v1.x",
-		dependencies = {
-
-			"neovim/nvim-lspconfig",
-			"williamboman/mason.nvim",
-
-			"hrsh7th/nvim-cmp",
-			"hrsh7th/cmp-buffer",
-			"hrsh7th/cmp-path",
-			"saadparwaiz1/cmp_luasnip",
-			"hrsh7th/cmp-nvim-lsp",
-			"hrsh7th/cmp-nvim-lua",
-
-			"L3MON4D3/LuaSnip",
-			"rafamadriz/friendly-snippets",
-			"mlaursen/vim-react-snippets",
-		},
+		"neovim/nvim-lspconfig",
 		config = function()
-			local lsp = require("lsp-zero")
+			vim.lsp.enable("luals")
 
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+			vim.lsp.config["luals"] = {
 
-			lsp.preset("recommended")
-			require("mason").setup()
-			require("vim-react-snippets").lazy_load()
+				cmd = { "lua-language-server" },
 
-			local config = require("vim-react-snippets.config")
-			config.readonly_props = false
+				filetypes = { "lua" },
 
-			lsp.ensure_installed({})
+				root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
 
-			vim.lsp.enable("astro")
-
-			vim.lsp.enable("lua_ls")
-
-			local cmp = require("cmp")
-			local cmp_select = { behavior = cmp.SelectBehavior.Select }
-			local cmp_mappings = lsp.defaults.cmp_mappings({
-				["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-				["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-				["<C-y>"] = cmp.mapping.confirm({ select = true }),
-				["<C-Space>"] = cmp.mapping.complete(),
-			})
-
-			local isLspDiagnosticsVisible = true
-			vim.keymap.set("n", "<leader>lx", function()
-				isLspDiagnosticsVisible = not isLspDiagnosticsVisible
-				vim.diagnostic.config({
-					virtual_text = isLspDiagnosticsVisible,
-					underline = isLspDiagnosticsVisible,
-				})
-			end)
-
-			lsp.set_preferences({
-				suggest_lsp_servers = false,
-				sign_icons = {
-					error = "E",
+				settings = {
+					Lua = {
+						runtime = {
+							version = "LuaJIT",
+						},
+					},
 				},
-			})
+			}
 
-			lsp.on_attach(function(client, bufnr)
-				local opts = { buffer = bufnr, remap = false }
-				vim.keymap.set("n", "gd", function()
-					vim.lsp.buf.definition()
-				end, opts)
-				vim.keymap.set("n", "K", function()
-					vim.lsp.buf.hover()
-				end, opts)
-				vim.keymap.set("n", "<leader>vws", function()
-					vim.lsp.buf.workspace_symbol()
-				end, opts)
-				vim.keymap.set("n", "<leader>vd", function()
-					vim.diagnostic.open_float()
-				end, opts)
-				vim.keymap.set("n", "[d", function()
-					vim.diagnostic.goto_next()
-				end, opts)
-				vim.keymap.set("n", "]d", function()
-					vim.diagnostic.goto_prev()
-				end, opts)
-				vim.keymap.set("n", "<leader>vca", function()
-					vim.lsp.buf.code_action()
-				end, opts)
-				vim.keymap.set("n", "<leader>vrr", function()
-					vim.lsp.buf.references()
-				end, opts)
-				vim.keymap.set("n", "<leader>vrn", function()
-					vim.lsp.buf.rename()
-				end, opts)
-				vim.keymap.set("i", "<C-h>", function()
-					vim.lsp.buf.signature_help()
-				end, opts)
-			end)
-
-			lsp.setup()
-
-			vim.diagnostic.config({
-				virtual_text = true,
-			})
+			vim.lsp.enable("clangd")
 		end,
+	},
+	{
+		"saghen/blink.cmp",
+		-- optional: provides snippets for the snippet source
+		dependencies = { "rafamadriz/friendly-snippets" },
+
+		-- use a release tag to download pre-built binaries
+		version = "1.*",
+		-- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
+		-- build = 'cargo build --release',
+		-- If you use nix, you can build from source using latest nightly rust with:
+		-- build = 'nix run .#build-plugin',
+
+		---@module 'blink.cmp'
+		---@type blink.cmp.Config
+		opts = {
+			-- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+			-- 'super-tab' for mappings similar to vscode (tab to accept)
+			-- 'enter' for enter to accept
+			-- 'none' for no mappings
+			--
+			-- All presets have the following mappings:
+			-- C-space: Open menu or open docs if already open
+			-- C-n/C-p or Up/Down: Select next/previous item
+			-- C-e: Hide menu
+			-- C-k: Toggle signature help (if signature.enabled = true)
+			--
+			-- See :h blink-cmp-config-keymap for defining your own keymap
+			keymap = {
+				preset = "default",
+				["<CR>"] = { "accept" },
+			},
+
+			appearance = {
+				-- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
+				-- Adjusts spacing to ensure icons are aligned
+				nerd_font_variant = "mono",
+			},
+
+			-- (Default) Only show the documentation popup when manually triggered
+			completion = { documentation = { auto_show = false } },
+
+			-- Default list of enabled providers defined so that you can extend it
+			-- elsewhere in your config, without redefining it, due to `opts_extend`
+			sources = {
+				default = { "lsp", "path", "snippets", "buffer" },
+			},
+
+			-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
+			-- You may use a lua implementation instead by using `implementation = "lua"` or fallback to the lua implementation,
+			-- when the Rust fuzzy matcher is not available, by using `implementation = "prefer_rust"`
+			--
+			-- See the fuzzy documentation for more information
+			fuzzy = { implementation = "lua" },
+		},
+		opts_extend = { "sources.default" },
 	},
 }
