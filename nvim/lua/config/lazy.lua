@@ -89,30 +89,44 @@ require("lazy").setup({
 	spec = {
 		-- import your plugins
 		{ import = "plugins" },
+		-- { import = "plugins.lsp" },
 	},
 	install = { colorscheme = { "habamax" } },
 	-- checker = { enabled = true, notify = false },
 })
 
-require("lspconfig").lua_ls.setup({})
-require("lspconfig").ts_ls.setup({
-	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-	cmd = { "typescript-language-server", "--stdio" },
-})
+--
+-- vim.lsp.config({
+-- 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+-- 	cmd = { "typescript-language-server", "--stdio" },
+-- })
 
-require("nvim-ts-autotag").setup({
-	opts = {
-		enable_close = true,
-		enable_rename = true,
-		enable_close_on_slash = false,
-	},
-	per_filetype = {
-		["html"] = {
-			enable_close = false,
-		},
-	},
-})
+-- vim.lsp.config("lua_ls", {})
+-- vim.lsp.config("ts_ls", {
+-- 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+-- 	cmd = { "typescript-language-server", "--stdio" },
+-- })
 
+-- require("lspconfig").lua_ls.setup({})
+
+-- require("lspconfig").ts_ls.setup({
+-- 	filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+-- 	cmd = { "typescript-language-server", "--stdio" },
+-- })
+
+-- require("nvim-ts-autotag").setup({
+-- 	opts = {
+-- 		enable_close = true,
+-- 		enable_rename = true,
+-- 		enable_close_on_slash = false,
+-- 	},
+-- 	per_filetype = {
+-- 		["html"] = {
+-- 			enable_close = false,
+-- 		},
+-- 	},
+-- })
+--
 -- require("lspconfig").zls.setup({})
 -- require("lspconfig").qmlls.setup {
 --     cmd = { "qmlls", "-E" }
