@@ -1,4 +1,5 @@
 return {
+	{ "rafamadriz/friendly-snippets" },
 	{
 		"mason-org/mason.nvim",
 		opts = {},
@@ -20,7 +21,39 @@ return {
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			vim.lsp.enable("luals")
+			vim.lsp.config("tailwindcss", {
+				cmd = { "tailwindcss-language-server", "--stdio" },
+				-- filetypes = { ... }, -- This is a HUGE list
+
+				capabilities = vim.lsp.protocol.make_client_capabilities(),
+
+				-- Modify this as you wish, just pasting the default values
+				settings = {
+					tailwindCSS = {
+						classAttributes = { "class", "className", "class:list", "classList", "ngClass" },
+						includeLanguages = {
+							eelixir = "html-eex",
+							elixir = "phoenix-heex",
+							eruby = "erb",
+							heex = "phoenix-heex",
+							htmlangular = "html",
+							templ = "html",
+						},
+						lint = {
+							cssConflict = "warning",
+							invalidApply = "error",
+							invalidConfigPath = "error",
+							invalidScreen = "error",
+							invalidTailwindDirective = "error",
+							invalidVariant = "error",
+							recommendedVariantOrder = "warning",
+						},
+						validate = true,
+					},
+				},
+
+				workspace_required = true, -- `:h lspconfig-all` says this is a default
+			})
 
 			vim.lsp.config["luals"] = {
 
@@ -39,6 +72,8 @@ return {
 				},
 			}
 
+			vim.lsp.enable("tailwindcss")
+			vim.lsp.enable("luals")
 			vim.lsp.enable("clangd")
 		end,
 	},
